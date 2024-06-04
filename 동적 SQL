@@ -1,5 +1,9 @@
 마이바티스의 기능 중 하나로 동적 SQL을 처리하는 방법
 
+데이터베이스 : 여러 정보를 저장하는 큰 컴퓨터 파일
+sql : 데이터베이스와 대화하기 위해서 사용하는 특별한 언어
+
+
 동적 SQL의 종류
   1. if
   2. choose (when, otherwise)
@@ -49,15 +53,23 @@ username과 일치하는 데이터를 가져옴
                <when test="username != null">
                   username = #{username}
                </when>
-               <when test="password != null">
-                  password = #{password}
+               <when test="age != null">
+                  age = #{age}
                </when>
                <otherwise>age >= 20</otherwise>
             </choose>
          </where>
    </select>
 
-id가 userSearch
+	데이터베이스에서 특정 조건에 맞는 정보를 찾는 것
+	id가 userSearch인 sql문
+	정보를 찾을 때 어떤 조건을 적용할지 where
+	choose : 여러 가지 조건 중 하나를 선택
+	사용자의 이름이 null이 아니라면 그 이름이 가진 정보만 가져옴
+	나이가 null이 아니라면 그 나이만 가져옴
+	만약 사용자의 이름도 나이도 없으면 나이가 20살 이상인 것에 해당하는 정보를 가져옴
+>> 사용자의 이름이나 나이를 기준으로 데이터를 찾고, 둘다 해당하지 않으면 나이가 20살 이상인 데이터를 찾아주는 코드
+
 
 3. set
 
