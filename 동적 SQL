@@ -42,3 +42,55 @@ username과 일치하는 데이터를 가져옴
     적용할 모든 조건을 원하는 대신에 한 가지 경우만 원할 때
     자바의 switch 구문과 유사
     
+   <select id="userSearch">
+         select   *  from   mytest
+         <where>
+            <choose>
+               <when test="username != null">
+                  username = #{username}
+               </when>
+               <when test="password != null">
+                  password = #{password}
+               </when>
+               <otherwise>age >= 20</otherwise>
+            </choose>
+         </where>
+   </select>
+
+
+3. set
+
+   <update id="userUpdate">
+      update  mytest 
+      <set>
+         <if test="password != null">password=#{password} ,</if>
+          <if test="birth != null">birth=#{birth} ,</if>
+          <if test="age != null">age=#{age}</if>
+      </set>
+      where  username=#{username}
+   </update>
+
+특정 사용자의 정보를 업데이트하는 sql문
+
+	userUpdate라는 이름을 가진 sql문 - 나중에 id로 호출하니까 중복되면 안됨
+	mytest 테이블에 데이터를 업데이트
+	set : 업데이트할 내용 설정, 수정할 항목을 모아둠
+	비밀번호가 null이 아닐 때 비밀번호 수정
+	생일이 null이 아닐 때 생일 수정
+	나이가 null이 아닐 때 나이를 수정
+		>> 주어진 비밀번호, 생일, 나이가 있다면 그 값으로 바꿔줌
+
+>>> 데이터베이스에서 특정 사용자의 정보를 업데이트함
+	사용자의 이름(username)을 기준으로 해당 사용자의 정보를 찾고,
+		주어진 항목이 있으면 그 항목만 수정한다.
+
+예를 들어, 우리가 "bob"이라는 사용자의 정보를 업데이트하고 싶을 때:
+- "bob"의 비밀번호, 생일, 나이 중에서 주어진 값만 바꿔줌.
+	>> 특정 사용자의 정보를 필요할 때만 수정할 수 있도록 도와주는 코드
+
+
+
+
+
+
+
