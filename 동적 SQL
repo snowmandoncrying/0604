@@ -1,0 +1,44 @@
+마이바티스의 기능 중 하나로 동적 SQL을 처리하는 방법
+
+동적 SQL의 종류
+  1. if
+  2. choose (when, otherwise)
+  3. trim (where, set)
+  4. foreach
+
+
+1. if
+  동적 SQL 에서 가장 공통적으로 사용
+  where의 일부로 포함될 수 있다.
+
+
+	<select id="user">
+		select * from mytest
+		where username=#{username}
+		<if test="password!=null">
+			and password=#{password}
+		</if>
+	</select>
+
+id는 절대 중복되면 안 된다. 나중에 sql문을 사용할 때 필요한 이름이다.
+username과 일치하는 데이터를 가져옴
+비밀번호가 null이 아닐 때 아래 내용을 실행함
+>> 즉 비밀번호가 주어졌을 때만 조건을 추가함
+비밀번호 값과 일치하는 데이터를 가져옴
+
+  >> 데이터베이스에서 특정 사용자의 정보를 가져오는 sql문
+  >> 사용자의 이름(username)을 이용해서 데이터를 찾고,
+  >> 비밀번호가 주어지면, 비밀번호와 일치하는 데이터 찾기 조건 추가
+
+예를 들어, 우리가 "alice"라는 사용자의 정보를 찾고 싶을 때, 그리고 비밀번호가 "1234"인 경우:
+- 이름이 "alice"인 사용자의 데이터를 가져오고,
+- 비밀번호가 "1234"인 데이터만 가져옴.
+
+이렇게 해서 특정 사용자의 정보를 가져올 수 있도록 도와주는 코드
+
+
+
+2. choose, when, otherwise
+    적용할 모든 조건을 원하는 대신에 한 가지 경우만 원할 때
+    자바의 switch 구문과 유사
+    
